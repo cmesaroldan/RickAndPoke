@@ -1,4 +1,6 @@
-import {agregarNombre} from './js/componenetes';
 import './styles.css';
+import { pokeDate } from './js/componenetes';
 
-agregarNombre('Alejandro Palacio');
+pokeDate()
+
+ 

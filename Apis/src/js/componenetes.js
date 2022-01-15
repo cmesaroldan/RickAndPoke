@@ -1,17 +1,30 @@
 import '../css/componentes.css'
 import webpackLogo from '../assets/img/webpack-logo.png';
 
-export const agregarNombre = ( nombre ) => {
-    const h1 = document.createElement('h1');
+//API//
+const API = 'https://pokeapi.co/api/v2/pokemon/';
+let buttonAPI = document.getElementById('btnAPI');
 
-    h1.innerText = `Mi nombre es ${nombre}!!!`;
+const numeroAleatorio = () => {
+    return Math.floor(Math.random()*((850+1)-1)+1);
+};
 
-    document.body.append(h1);
+export const pokeDate = () => { 
+buttonAPI.addEventListener('click', () => {
+    let img = document.getElementById('img');
+    let pokeName = document.getElementById('pokeName');
+    let xhttp = new XMLHttpRequest();
+    xhttp.open("GET",`${API}${numeroAleatorio()}`);
+    xhttp.send();
 
-    //IMG
-    console.log(webpackLogo);
-    const img = document.createElement('img');
-    img.src = webpackLogo;
-
-    document.body.append(img);
+    xhttp.onreadystatechange = function() {
+        if (this.readyState === 4 && this.status === 200) {
+            let datoPokemon = JSON.parse(this.responseText);
+            img.setAttribute("src",datoPokemon.sprites.front_default);
+            pokeName.textContent = (datoPokemon.name);
+        } else {
+            pokeName.textContent = 'Error en la API';
+        }
+    };
+ });
 }
